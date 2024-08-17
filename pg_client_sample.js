@@ -2,7 +2,8 @@
 // RDB（Relational Database）のひとつであるPostgreSQLに接続し、検索するための最小プログラム。
 
 
-const {Client} = require("pg");
+// const {Client} = require("pg");
+import {Client} from "pg";
 
 const pgClient = new Client({
 	host: "localhost",			// データベースが稼働するホスト。
