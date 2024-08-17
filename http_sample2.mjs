@@ -17,14 +17,14 @@ var pgClient = new Client({
 	password: "password",	// データベースパスワード。
 	connectionTimeoutMillis: 2000,	// データベースへの接続完了まで2秒以上かかったらエラー。
 });
-
+pgClient.connect()
 
 app.get("/create", (req, res) => {
   res.send("create");
 });
 
 app.get("/read", function (req, res) {
-	pgClient.connect()
+	// pgClient.connect()
 	const query = "select * from key_value";
 	
 	pgClient.query(query)
@@ -35,7 +35,7 @@ app.get("/read", function (req, res) {
 			}
 	)
 	.catch(e => console.error(e.stack))
-	.finally(() => pgClient.end())
+	// .finally(() => pgClient.end())
 })
 
 // app.get("/read", (req, res) => {
@@ -63,3 +63,5 @@ app.get("/delete", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
+pgClient.end();

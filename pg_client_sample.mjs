@@ -4,7 +4,7 @@
 import pkg from "pg"; 
 const { Client } = pkg;
 
-var pgClient = new Client({
+const pgClient = new Client({
 	host: "localhost",			// データベースが稼働するホスト。
 	port: 5432,						// ポート番号。
 	database: "postgres",			// データベース名。
@@ -15,11 +15,30 @@ var pgClient = new Client({
 
 pgClient.connect();
 
-pgClient.query("select * from key_value")
-	.then(res => {
-		console.log(res.rows[0])
-	}).catch(e => {
-		console.error(e.stack)
-	}).finally(() => {
-		pgClient.end()
-	});
+// pgClient.query("select * from key_value")
+// 	.then(res => {
+// 		console.log(res.rows[0])
+// 	}).catch(e => {
+// 		console.error(e.stack)
+// 	}).finally(() => {
+// 		pgClient.end()
+// 	});
+
+const readProc = async(params) => {
+
+	let result = null;
+	try {
+		result = await pgClient.query("select * from key_value where key = 'key1'");
+		console.log(result.rows[0]);
+		result = await pgClient.query("select * from key_value where key = 'key2'");
+		console.log(result.rows[0]);
+	} catch(err) {
+		throw err;
+	} finally {
+		pgClient.end();
+	}
+	
+}
+
+readProc();
+
