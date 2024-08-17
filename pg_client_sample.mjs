@@ -13,19 +13,8 @@ const pgClient = new Client({
 	connectionTimeoutMillis: 2000,	// データベースへの接続完了まで2秒以上かかったらエラー。
 });
 
-pgClient.connect();
-
-// pgClient.query("select * from key_value")
-// 	.then(res => {
-// 		console.log(res.rows[0])
-// 	}).catch(e => {
-// 		console.error(e.stack)
-// 	}).finally(() => {
-// 		pgClient.end()
-// 	});
-
 const readProc = async(params) => {
-
+	pgClient.connect();
 	let result = null;
 	try {
 		result = await pgClient.query("select * from key_value where key = 'key1'");
@@ -37,7 +26,6 @@ const readProc = async(params) => {
 	} finally {
 		pgClient.end();
 	}
-	
 }
 
 readProc();
