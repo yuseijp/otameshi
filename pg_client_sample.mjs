@@ -2,17 +2,20 @@
 // RDB（Relational Database）のひとつであるPostgreSQLに接続し、検索するための最小プログラム。
 
 import pkg from "pg"; 
+import dotenv from "dotenv";
+
 const { Client } = pkg;
+dotenv.config();	// envファイルに記載された環境変数を読み込み、process.envオブジェクトに設定。
 
 const pgClient = new Client({
-	host: "localhost",			// データベースが稼働するホスト。
-	port: 5432,						// ポート番号。
-	database: "postgres",			// データベース名。
-	user: "postgres",			// データベースユーザーID。
-	password: "password",	// データベースパスワード。
+	host: process.env.DB_HOST,            // データベースが稼働するホスト。
+	port: process.env.DB_PORT,            // ポート番号。
+	database: process.env.DB_DATABASE,    // データベース名。
+	user: process.env.DB_USER,            // データベースユーザーID。
+	password: process.env.DB_PASSWORD,    // データベースパスワード。
 	connectionTimeoutMillis: 2000,	// データベースへの接続完了まで2秒以上かかったらエラー。
 });
-
+	
 const readProc = async(params) => {
 	pgClient.connect();
 	let result = null;
@@ -29,4 +32,3 @@ const readProc = async(params) => {
 }
 
 readProc();
-
