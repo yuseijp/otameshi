@@ -28,8 +28,8 @@ const readProc = async(params) => {
 			sql += ` where key = '${params.key}'`;
 		}
 		result = await pgClient.query(sql);
-		console.log(su.pr("result", JSON.stringify(result.rows)));
-		return result.rows[0];
+		console.log(su.pr("result1", JSON.stringify(result.rows)));
+		return result.rows;
 	} catch(err) {
 		throw err;
 	} finally {
